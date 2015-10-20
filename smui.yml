@@ -5,7 +5,7 @@
 
   tasks:
     - name: install personal brew applications
-      homebrew: name={{item}}, install_options={{item.options}} state=latest
+      homebrew: name={{item}} state=latest
       with_items:
 #	- 'ag'
         - python

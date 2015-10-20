@@ -5,10 +5,10 @@
   with_items:
     - caskroom/cask/brew-cask
     - cassandra
-    - elasticsearch
+#    - elasticsearch
     - git
     - node
-    - nginx-full
+#    - nginx-full
     - postgresql
     - redis
     - rhino

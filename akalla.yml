@@ -12,3 +12,6 @@
 
   roles:
     - profile-gopro
+  
+  vars:
+    - computername: mbr-30324

@@ -11,12 +11,10 @@
     - mou
     - sublime-text
     - shiftit
-    - 
 
 - name: install developer brew applications
   homebrew: name={{item}} state=latest
   with_items:
-    - gvm
     - brew-cask
     - cassandra
     - elasticsearch

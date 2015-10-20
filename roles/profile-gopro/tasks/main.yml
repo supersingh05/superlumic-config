@@ -3,7 +3,7 @@
 - name: install developer brew applications
   homebrew: name={{item}} state=latest
   with_items:
-    - brew-cask
+    - caskroom/cask/brew-cask
     - cassandra
     - elasticsearch
     - git

@@ -28,8 +28,7 @@
         - /etc/ssh
 
   roles:
-    - profile-all
-    - profile-developer
+    - profile-gopro
 
   vars:
     - computername: mbr-26378

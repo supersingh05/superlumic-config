@@ -1,0 +1,30 @@
+---
+
+- name: install cask applications for all users
+  homebrew_cask: name={{item}} state=present
+  with_items:
+    - hipchat
+    - google-drive
+    - keepingyouawake
+    - boot2docker
+    - firefox
+    - iterm2
+    - mou
+    - sublime-text
+    - shiftit
+    - 
+
+- name: install developer brew applications
+  homebrew: name={{item}} state=latest
+  with_items:
+    - gvm
+    - brew-cask
+    - cassandra
+    - elasticsearch
+    - git
+    - node
+    - nginx-full
+    - postgresql
+    - redis
+    - rhino
+    - selenium-server-standalone

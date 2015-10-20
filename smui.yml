@@ -7,8 +7,8 @@
     - name: install personal brew applications
       homebrew: name={{item}}, state=latest
       with_items:
-        - emacs
 	- ag
+        - emacs
 
     - name: install personal cask applications
       homebrew_cask: name={{item}} state=present

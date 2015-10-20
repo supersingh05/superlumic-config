@@ -5,10 +5,13 @@
 
   tasks:
     - name: install personal brew applications
-      homebrew: name={{item}}, state=latest
+      homebrew: name={{item}}, install_options={{item.options}} state=latest
       with_items:
 #	- 'ag'
-        - emacs
+        - python
+
+    - name: install emacs
+      homebrew: name=emacs, install_options=with-cocoa,with-glib,with-librsvg state=latest
 
     - name: install personal cask applications
       homebrew_cask: name={{item}} state=present

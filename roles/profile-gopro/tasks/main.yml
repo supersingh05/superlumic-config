@@ -11,6 +11,7 @@
     - mou
     - sublime-text
     - shiftit
+    - java
 
 - name: install developer brew applications
   homebrew: name={{item}} state=latest
@@ -20,8 +21,19 @@
     - elasticsearch
     - git
     - node
-    - nginx-full
+    - nginx
     - postgresql
     - redis
     - rhino
     - selenium-server-standalone
+- name: download gvm
+  get_url:
+    url: https://raw.githubusercontent.com/moovweb/gvm/master/binscripts/gvm-installer
+    dest: /tmp/gvm-install.sh
+    mode: 0440
+- name: install gvm
+  command: /usr/local/bin/bash /tmp/gvm-install.sh
+
+- name: setting path
+  sudo: no
+  action: shell source /Users/{{ansible_user_id}}/.gvm/scripts/gvm

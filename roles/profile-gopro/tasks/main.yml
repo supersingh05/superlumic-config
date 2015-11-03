@@ -6,7 +6,7 @@
     - hipchat
     - google-drive
     - keepingyouawake
-    - boot2docker
+    - dockertoolbox 
     - firefox
     - iterm2
     - mou
@@ -50,3 +50,32 @@
 - name: setting path
   sudo: no
   action: shell source /Users/{{ansible_user_id}}/.gvm/scripts/gvm
+
+- name: writing rvm to bash_profile
+  when: isGvmInstalled|failed
+  shell: /bin/echo '[[ -s "$HOME/.gvm/scripts/gvm" ]] && source "$HOME/.gvm/scripts/gvm" # Load GVM into a shell session *as a function*' >> /Users/{{ansible_user_id}}/.bash_profile
+
+
+- name: check for rvm
+  register: isRvmInstalled
+  command: rvm list
+  ignore_errors: True
+
+- name: download rvm
+  when: isRvmInstalled|failed
+  get_url:
+    url: https://get.rvm.io
+    dest: /tmp/rvm-install.sh
+    mode: 0440
+
+- name: install rvm
+  when: isRvmInstalled|failed
+  command: bash /tmp/rvm-install.sh
+
+- name: setting path
+  sudo: no
+  action: shell source /Users/{{ansible_user_id}}/.rvm/scripts/rvm
+
+- name: writing rvm to bash_profile
+  when: isRvmInstalled|failed
+  shell: /bin/echo '[[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm" # Load RVM into a shell session *as a function*' >> /Users/{{ansible_user_id}}/.bash_profile

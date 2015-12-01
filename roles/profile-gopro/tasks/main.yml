@@ -1,20 +1,20 @@
 ---
-
 - name: install cask applications for all users
+  when: ansible_distribution == 'MacOSX'
   homebrew_cask: name={{item}} state=present
   with_items:
     - hipchat
     - google-drive
     - keepingyouawake
-    - dockertoolbox 
+    - dockertoolbox
     - firefox
     - iterm2
     - mou
     - sublime-text
     - shiftit
-    - java
 
 - name: install developer brew applications
+  when: ansible_distribution == 'MacOSX'
   homebrew: name={{item}} state=latest
   with_items:
     - brew-cask
@@ -28,54 +28,17 @@
     - rhino
     - selenium-server-standalone
 
-- name: check for gvm
-  register: isGvmInstalled
-  command: gvm list
-  ignore_errors: True
-
 - name: download gvm
-  when: isGvmInstalled|failed
+  when: ansible_distribution == 'MacOSX'
   get_url:
     url: https://raw.githubusercontent.com/moovweb/gvm/master/binscripts/gvm-installer
     dest: /tmp/gvm-install.sh
     mode: 0440
-
 - name: install gvm
-  when: isGvmInstalled|failed
-  command: bash /tmp/gvm-install.sh
-
-- name: install go1.4.3
-  command: gvm install go1.4.3
+  when: ansible_distribution == 'MacOSX'
+  command: command -v gvm >/dev/null 2>&1 || /usr/bin/env bash /tmp/gvm-install.sh
 
 - name: setting path
+  when: ansible_distribution == 'MacOSX'
   sudo: no
   action: shell source /Users/{{ansible_user_id}}/.gvm/scripts/gvm
-
-- name: writing rvm to bash_profile
-  when: isGvmInstalled|failed
-  shell: /bin/echo '[[ -s "$HOME/.gvm/scripts/gvm" ]] && source "$HOME/.gvm/scripts/gvm" # Load GVM into a shell session *as a function*' >> /Users/{{ansible_user_id}}/.bash_profile
-
-
-- name: check for rvm
-  register: isRvmInstalled
-  command: rvm list
-  ignore_errors: True
-
-- name: download rvm
-  when: isRvmInstalled|failed
-  get_url:
-    url: https://get.rvm.io
-    dest: /tmp/rvm-install.sh
-    mode: 0440
-
-- name: install rvm
-  when: isRvmInstalled|failed
-  command: bash /tmp/rvm-install.sh
-
-- name: setting path
-  sudo: no
-  action: shell source /Users/{{ansible_user_id}}/.rvm/scripts/rvm
-
-- name: writing rvm to bash_profile
-  when: isRvmInstalled|failed
-  shell: /bin/echo '[[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm" # Load RVM into a shell session *as a function*' >> /Users/{{ansible_user_id}}/.bash_profile

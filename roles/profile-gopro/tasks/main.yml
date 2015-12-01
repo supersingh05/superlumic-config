@@ -22,7 +22,7 @@
     - elasticsearch
     - git
     - node
-    - nginx
+    - nginx-full
     - postgresql
     - redis
     - rhino
